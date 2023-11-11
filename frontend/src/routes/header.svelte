@@ -1,25 +1,24 @@
 <script>
-    import { signIn, signOut } from '@auth/sveltekit/client';
-    import {page} from "$app/stores";
+    import User from "./userHeader.svelte";
 </script>
 
-{#if $page.data?.session?.user}
-    <img src={$page.data.session.user.image} alt="Avatar" class="avatar" height="100" width="100" />
-    {#if $page.data.session.user.email}
-        <span>{$page.data.session.user.email}</span>
-    {/if}
-    <span>{$page.data.session.user.name}</span>
-    <button on:click={() => signOut('auth0', {
-  redirect: true,
-  callbackUrl: '/logout'
-})} class="button">Sign out</button>
-{/if}
-<button on:click={() => signIn(
-  'auth0', {
-    redirect: false,
-    callbackUrl: '/'
-  },
-  {
-    scope: 'api openid profile email'
-  }
-)}>Sign in</button>
+<div id="header">
+    <img src="/logoLight.png" alt="logo" height="40px" />
+    <User />
+</div>
+
+<style>
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+        height: 4rem;
+        background-color: #333;
+        color: #fff;
+    }
+</style>
