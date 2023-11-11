@@ -56,7 +56,6 @@
 
     .page-title {
         font-size: 40pt;
-        text-decoration: underline;
     }
     
     .settings-page {
