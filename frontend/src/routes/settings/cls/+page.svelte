@@ -1,18 +1,13 @@
 <div class="centered-container">
-    <h1 class="page-title"><a class="same-unvisited" href="/settings">Settings</a> / General</h1>
+    <h1 class="page-title"><a class="same-unvisited" href="/settings">Settings</a> / Classes</h1>
 </div>
 <br/>
 
 <div class="hv-centered-container settings-form">
-    <form method="post" action="/api/user/update_settings/gen">
-        <label for="name">Enter your name:</label>
-        <input type="text" id="name" name="name" placeholder="John Doe" required>
-        <br/>
-        <label for="phone">Enter your phone number (for notifications, optional):</label>
-        <input type="tel" id="phone" placeholder="123-456-678" name="phone">
-        <br/>
-        <label for="email">Enter your email (for notifications, optional):</label>
-        <input type="email" id="email" placeholder="jdoe@example.com" name="email">
+    <p>To tell us what class you're in, visit <a target="_blank" href="https://my.wisc.edu/portal/p/class-schedule.ctf2/max/render.uP">this website</a>, and click the print button. Choose "Save to PDF" (or similar) to download a PDF of your schedule. </p>
+    <form method="post" action="/api/user/update_settings/classes_from_pdf">
+        <label for="pdf">Upload your PDF here:</label>
+        <input type="file" id="pdf" name="pdf" required>
         <br/>
         <button type="submit">Submit</button>
     </form>
