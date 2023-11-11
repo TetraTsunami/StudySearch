@@ -20,6 +20,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@auth0/auth0-spa-js": "^2.1.2"
+		"@auth/core": "^0.18.1",
+		"@auth/sveltekit": "^0.3.12"
 	}
 }
