@@ -1,5 +1,5 @@
 <div class="centered-container">
-    <h1 class="page-title">Settings / General</h1>
+    <h1 class="page-title"><a class="same-unvisited" href="/settings">Settings</a> / General</h1>
 </div>
 <br/>
 
@@ -41,5 +41,14 @@
         border: inset 2px;
         padding: 20px;
         font-size: 18pt;
+    }
+
+    a.same-unvisited {
+        color:blue;
+        text-decoration: none;
+    }
+
+    a.same-unvisited:visited {
+        color: blue;
     }
 </style>
