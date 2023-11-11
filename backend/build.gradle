@@ -45,6 +45,7 @@ tasks.withType(KotlinCompile).configureEach {
 
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-base:latest'
+    imageName = 'study-search-spring-boot'
 }
 
 tasks.named('test') {

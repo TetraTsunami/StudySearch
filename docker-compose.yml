@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  spring-boot:
+    image: study-search-spring-boot
+    container_name: study-search-spring-boot
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
