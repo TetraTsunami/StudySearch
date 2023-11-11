@@ -53,7 +53,7 @@ The database contains two collections:
 
 ### Group Format
 
-```
+```json
 {
 	"gid": 343434,
 	"member_uids": [
