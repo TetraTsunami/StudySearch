@@ -7,6 +7,9 @@ services:
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: prod
+    # TODO - Remove this ports definition when the frontend + reverse proxy is set up
+    ports:
+      - "8082:8082"
     networks:
       - web
 
