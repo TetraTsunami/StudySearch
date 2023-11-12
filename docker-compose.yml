@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  spring-boot:
+    image: study-search-spring-boot
+    container_name: study-search-spring-boot
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    env_file:
+      - .env
+    # TODO - Remove this ports definition when the frontend + reverse proxy is set up
+    ports:
+      - "8082:8082"
+#    networks:
+#      - web
+  caddy:
+    image: caddy:2.4.5
+    container_name: study-search-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./data/caddy:/data
+      - ./data/certificates:/certificates
+
+#networks:
+#  web:
+#    external: true

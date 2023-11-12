@@ -1,0 +1,6 @@
+http://localhost {
+    handle /api/* {
+        reverse_proxy localhost:8082
+    }
+    reverse_proxy http://localhost:5173
+}
