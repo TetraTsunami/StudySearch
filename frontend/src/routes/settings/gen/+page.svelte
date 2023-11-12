@@ -37,6 +37,7 @@
         <input type="range" step="1" min="{ppl_max_min}" max="{ppl_max_max}" bind:value="{ppl_max_val}" name="desiredPeopleMax">
         <output>{ppl_max_val}</output>
         <br/>
+        <input type="hidden" name="redirect" required value="/settings/gen">
         <button type="submit">Submit</button>
     </form>
 </div>
