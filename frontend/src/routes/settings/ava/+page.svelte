@@ -1,5 +1,6 @@
 <script>
     import CalendarWidget from "./calendarWidget.svelte";
+    import Dialog from "../dialog.svelte";
     let gridget = [];
     let startingHour = 7;
 
@@ -72,6 +73,7 @@
     <br/>
     <button on:click={sendGrid}>Save</button>
 </div>
+<Dialog />
 
 <style>
     .centered-container {

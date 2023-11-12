@@ -1,3 +1,7 @@
+<script>
+import Dialog from "../dialog.svelte";
+</script>
+
 <div class="centered-container">
     <h1 class="page-title"><a class="same-unvisited" href="/settings">Settings</a> / Classes</h1>
 </div>
@@ -13,6 +17,7 @@
         <button type="submit">Submit</button>
     </form>
 </div>
+<Dialog />
 
 <style>
     .centered-container {
