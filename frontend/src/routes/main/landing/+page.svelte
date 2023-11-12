@@ -4,7 +4,7 @@
 
     let missing = [];
     onMount(async () => {
-        let fetched_missing_data = await fetch("/api/user/seings/missing");
+        let fetched_missing_data = await fetch("/api/user/settings/missing");
         missing = await fetched_missing_data.json();
         if (missing.length !== 0) {
             document.location = "/settings";
