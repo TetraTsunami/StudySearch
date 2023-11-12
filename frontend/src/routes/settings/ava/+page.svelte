@@ -1,5 +1,5 @@
 <script>
-    import AvailableWidget from "./availableWidget.svelte";
+    import CalendarWidget from "./calendarWidget.svelte";
 </script>
 
 <div class="centered-container">
@@ -9,7 +9,7 @@
 
 <div class="hv-centered-container settings-form">
     <p>grid widget be goes here</p>
-    <AvailableWidget />
+    <CalendarWidget />
 </div>
 
 <style>

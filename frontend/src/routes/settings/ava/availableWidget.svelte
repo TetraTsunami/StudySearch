@@ -29,12 +29,12 @@
 
             {#each {length: columns[i].length / 2} as hour}
                 <div class="hour-group">
-                    <div class={columns[i][hour * 2] ? "active" : ""}
+                    <div class:active={{columns[i][hour * 2]}
                          on:mouseenter={() => {if (isDragging) columns[i][hour * 2] = !columns[i][hour * 2]}}
                          on:mousedown={() => {columns[i][hour * 2] = !columns[i][hour * 2]
                         }}
                     />
-                    <div class={columns[i][hour * 2 + 1] ? "active" : ""}
+                    <div class:active={columns[i][hour * 2 + 1]}
                          on:mouseenter={() => {if (isDragging) columns[i][hour * 2 + 1] = !columns[i][hour * 2 + 1]}}
                          on:mousedown={() => {columns[i][hour * 2 + 1] = !columns[i][hour * 2 + 1]
                         }}
