@@ -3,12 +3,15 @@
 </script>
 
 <div id="header">
-    <img src="/logoLight.png" alt="logo" height="40px" />
+    <a href="/">
+        <img src="/logoLight.png" alt="logo" height="40px" />
+    </a>
     <User />
 </div>
 
 <style>
     #header {
+        z-index: 1;
         position: fixed;
         top: 0;
         left: 0;

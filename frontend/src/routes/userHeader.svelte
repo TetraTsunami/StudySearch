@@ -27,6 +27,7 @@
             {#if $page.data.session.user.email}
                 <small>{$page.data.session.user.email}</small>
             {/if}
+            <a href="/settings">Settings</a>
             <button on:click={() => signOut('auth0', {
   redirect: true,
   callbackUrl: '/logout'
@@ -57,6 +58,12 @@
         font-size: 1.1em;
         padding: 0.7rem 1rem;
         background: transparent;
+        margin: 1rem 0;
+    }
+
+    a {
+        display: block;
+        text-decoration: none;
         margin: 1rem 0;
     }
 
