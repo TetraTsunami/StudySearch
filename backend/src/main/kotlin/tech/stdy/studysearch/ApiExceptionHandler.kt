@@ -14,5 +14,5 @@ class ApiExceptionHandler {
     fun handleNoHandlerFoundException(ex: NoHandlerFoundException, httpServletRequest: HttpServletRequest) =
         ResponseEntity.status(HttpStatus.NOT_FOUND)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(ApiErrorResponse.ENDPOINT_NOT_FOUND)
+            .body(ApiHttpResponse.ENDPOINT_NOT_FOUND)
 }

@@ -11,18 +11,19 @@ data class Student(
     @Id
     val id: ObjectId = ObjectId(),
     val profile: Profile,
-    val availability: WeekAvailability,
+    val availability: WeekSchedule?,
     // TODO Filter by this when group searching and add toggle on frontend/API
     val lookingForGroup: Boolean,
-    val classes: List<StudentClass>
+    val classes: List<StudentClass>?,
+    val other: MiscStudentData?
 )
 
 fun OidcUser.asStudent(studentRepo: StudentRepository) = this.getClaimAsString("email")
     ?.let { studentRepo.findStudentByProfileEmail(it).orElse(null) }
 
-data class Profile(val name: String, val email: String)
+data class Profile(val name: String, val phoneNumber: String, val email: String)
 
-typealias WeekAvailability = Map<Day, List<HourAvailability>>
+typealias WeekSchedule = Map<Day, List<DaySchedule>>
 
 enum class Day {
     SUN,
@@ -34,6 +35,8 @@ enum class Day {
     SAT
 }
 
-data class HourAvailability(val start: LocalDateTime, val end: LocalDateTime)
+data class DaySchedule(val start: LocalDateTime, val end: LocalDateTime)
 
-data class StudentClass(val id: String, val displayName: String)
+data class StudentClass(val id: String, val displayName: String, val location: String, val section: String, val schedule: WeekSchedule)
+
+data class MiscStudentData(val preferSameSection: Boolean, val desiredHeadCountMin: Int, val desiredHeadCountMax: Int)
