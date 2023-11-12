@@ -1,3 +1,7 @@
+<script>
+    import AvailableWidget from "./availableWidget.svelte";
+</script>
+
 <div class="centered-container">
     <h1 class="page-title"><a class="same-unvisited" href="/settings">Settings</a> / Availability</h1>
 </div>
@@ -5,6 +9,7 @@
 
 <div class="hv-centered-container settings-form">
     <p>grid widget be goes here</p>
+    <AvailableWidget />
 </div>
 
 <style>

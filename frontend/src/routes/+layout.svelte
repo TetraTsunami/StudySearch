@@ -26,7 +26,7 @@
         color: var(--text-color);
     }
     main {
-        max-width: 1000px;
+        max-width: 1500px;
         margin: auto;
         padding: 0 1rem;
     }
