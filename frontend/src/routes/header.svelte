@@ -7,8 +7,6 @@
     <a href="/">
         <img src="/logoLight.png" alt="logo" height="40px" />
     </a>
-    <a href="/main/landing">Group Search</a>
-    <a href="/settings">Settings</a>
     <User />
 </div>
 

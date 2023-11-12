@@ -1,7 +1,14 @@
-import type { LayoutServerLoad } from "./$types"
+import { redirect } from '@sveltejs/kit';
 
-export const load: LayoutServerLoad = async (event) => {
-    return {
-        session: await event.locals.getSession(),
+export const load = async (event) => {
+    const session = await event.locals.getSession();
+    console.log(event)
+
+    if (session && event.url.pathname == '/') {
+        throw redirect(307, '/main/landing');
     }
-}
+
+    return {
+        session
+    };
+};
