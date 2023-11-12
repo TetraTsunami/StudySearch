@@ -35,7 +35,35 @@ enum class Day {
     SAT
 }
 
-data class DaySchedule(val start: LocalDateTime, val end: LocalDateTime)
+data class DaySchedule(val start: LocalDateTime, val end: LocalDateTime) {
+
+    init {
+        if (start.isAfter(end)) {
+            throw IllegalArgumentException("Start time must be before end time")
+        }
+    }
+    /**
+     * Returns true if this HourAvailability overlaps with the other HourAvailability
+     */
+    fun overlaps(other: DaySchedule): Boolean {
+        return this.start.isBefore(other.end) && this.end.isAfter(other.start)
+    }
+
+    /**
+     * Returns the intersection of this HourAvailability and the other HourAvailability
+     * If there is no intersection, returns null
+     */
+    fun intersection(other: DaySchedule): DaySchedule? {
+        if (this.overlaps(other)) {
+            return DaySchedule(
+                if (this.start.isAfter(other.start)) this.start else other.start,
+                if (this.end.isBefore(other.end)) this.end else other.end
+            )
+        }
+        return null
+    }
+
+}
 
 data class StudentClass(val id: String, val displayName: String, val location: String, val section: String, val schedule: WeekSchedule)
 
