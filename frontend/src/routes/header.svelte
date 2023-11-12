@@ -1,11 +1,14 @@
 <script>
     import User from "./userHeader.svelte";
+    import {page} from "$app/stores";
 </script>
 
 <div id="header">
     <a href="/">
         <img src="/logoLight.png" alt="logo" height="40px" />
     </a>
+    <a href="/main/landing">Group Search</a>
+    <a href="/settings">Settings</a>
     <User />
 </div>
 
@@ -23,5 +26,10 @@
         height: 4rem;
         background-color: #333;
         color: #fff;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2rem;
     }
 </style>

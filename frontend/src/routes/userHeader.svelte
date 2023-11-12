@@ -28,9 +28,9 @@
                 <small>{$page.data.session.user.email}</small>
             {/if}
             <a href="/settings">Settings</a>
-            <button on:click={() => signOut('auth0', {
+            <button on:click={() => signOut({
   redirect: true,
-  callbackUrl: '/logout'
+  callbackUrl: '/'
 })} class="authbutton">Sign out
             </button>
         {/if}

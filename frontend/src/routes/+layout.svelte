@@ -3,7 +3,7 @@
 </script>
 
 <Header />
-<main id="container" style="--accent-color: #e3ba42">
+<main id="container">
     <div class="header-padding" />
     <slot />
 </main>
@@ -28,7 +28,7 @@
     main {
         max-width: 1500px;
         margin: auto;
-        padding: 0 1rem;
+        padding: 0;
     }
     #container {
         min-height: calc(100vh);

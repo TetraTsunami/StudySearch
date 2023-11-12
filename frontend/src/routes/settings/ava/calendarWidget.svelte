@@ -104,7 +104,7 @@
     }
 
     div.active {
-        background: orange;
+        background: var(--accent-color);
     }
 
     div.hour {
