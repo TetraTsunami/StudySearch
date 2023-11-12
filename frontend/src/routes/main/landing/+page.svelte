@@ -2,8 +2,13 @@
     import { onMount } from "svelte";
     import SmallGroup from "./smallGroup.svelte";
 
+    import { page } from '$app/stores';
+
     let missing = [];
     onMount(async () => {
+        if ($page.url.searchParams.has('idontcare')) {
+            return;
+        }
         let fetched_missing_data = await fetch("/api/user/settings/missing");
         missing = await fetched_missing_data.json();
         if (missing.length !== 0) {
