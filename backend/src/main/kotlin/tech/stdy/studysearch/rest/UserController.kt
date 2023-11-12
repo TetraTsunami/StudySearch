@@ -1,5 +1,6 @@
 package tech.stdy.studysearch.rest
 
+import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
@@ -31,14 +32,14 @@ class UserController(
 
     @GetMapping("/settings/missing")
     fun getMissingSettings(@AuthenticationPrincipal principal: OidcUser): Any {
-        val student = principal.asStudent(this.studentRepo) ?: return ApiHttpResponse.RESOURCE_NOT_FOUND
+        val student = principal.asStudent(this.studentRepo)
         val missing = mutableListOf<String>()
 
-        if (student.profile == null)
+        if (student?.profile == null)
             missing.add("profile")
-        if (student.classes == null)
+        if (student?.classes == null)
             missing.add("classes")
-        if (student.availability == null)
+        if (student?.availability == null)
             missing.add("availability")
 
         return missing
@@ -49,14 +50,15 @@ class UserController(
         @ModelAttribute form: GeneralSettingsForm,
         @AuthenticationPrincipal principal: OidcUser
     ): ApiHttpResponse {
-        val student = principal.asStudent(this.studentRepo) ?: return ApiHttpResponse.RESOURCE_NOT_FOUND
+        val student = principal.asStudent(this.studentRepo)
         val newProfile = Profile(form.name, form.phone, principal.email)
         val newMiscData = MiscStudentData(form.pss, form.desiredPeopleMin, form.desiredPeopleMax)
         val newStudent = Student(
-            student.id, newProfile, student.availability, student.lookingForGroup, student.classes, newMiscData
+            student?.id ?: ObjectId(), newProfile, student?.availability, student?.lookingForGroup ?: true,
+            student?.classes, newMiscData
         )
 
-        this.studentRepo.delete(student)
+        student?.let { this.studentRepo.delete(it) }
         this.studentRepo.insert(newStudent)
 
         return ApiHttpResponse.SUCCESS
