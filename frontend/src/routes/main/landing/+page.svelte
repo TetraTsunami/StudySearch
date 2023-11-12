@@ -1,5 +1,15 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import SmallGroup from "./smallGroup.svelte";
+
+    let missing = [];
+    onMount(async () => {
+        let fetched_missing_data = await fetch("/api/user/seings/missing");
+        missing = await fetched_missing_data.json();
+        if (missing.length !== 0) {
+            document.location = "/settings";
+        }
+    });
 
     type Group = {
         "id": number,

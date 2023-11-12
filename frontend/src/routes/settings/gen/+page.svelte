@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Dialog from "../dialog.svelte";
     let ppl_min_val: string = "0";
     let ppl_max_val: string = "10"
     let ppl_max_min: string = "1";
@@ -41,6 +42,7 @@
         <button type="submit">Submit</button>
     </form>
 </div>
+<Dialog />
 
 <style>
     .centered-container {
