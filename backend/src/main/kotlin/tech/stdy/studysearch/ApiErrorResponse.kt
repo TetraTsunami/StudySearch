@@ -5,5 +5,6 @@ import org.springframework.http.HttpStatus
 data class ApiErrorResponse(val code: Int, val message: String) {
     companion object {
         val RESOURCE_NOT_FOUND = ApiErrorResponse(HttpStatus.NOT_FOUND.value(), "Resource not found")
+        val ENDPOINT_NOT_FOUND = ApiErrorResponse(HttpStatus.NOT_FOUND.value(), "Endpoint not found")
     }
 }
