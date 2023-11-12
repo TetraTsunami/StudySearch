@@ -27,7 +27,7 @@
     }
     main {
         z-index: -1;
-        max-width: 1000px;
+        max-width: 1500px;
         margin: auto;
         padding: 0 1rem;
     }
