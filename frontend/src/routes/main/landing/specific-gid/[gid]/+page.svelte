@@ -18,6 +18,9 @@
             }
         ]
     };
+    let meet_start_time = "2:00";
+    let meet_end_time = "3:30";
+    let meet_ampm = "PM";
 </script>
 
 <div class="centered-container">
@@ -45,6 +48,12 @@
 </div>
 
 <div class="centered-container">
+    <div class="available-to-meet">
+        Available to meet {meet_start_time}-{meet_end_time} {meet_ampm}.
+    </div>
+</div>
+
+<div class="centered-container">
     <div>
         <button class="group-action-button join-button" on:click={() => {
             document.location += "/action-join";
@@ -67,6 +76,14 @@
 
     .page-title {
         font-size: 40pt;
+    }
+
+    .available-to-meet {
+        background-color: lightskyblue;
+        border-radius: 6px;
+        font-size: 30pt;
+        margin: 10px;
+        padding: 10px;
     }
 
     .profile-box {
