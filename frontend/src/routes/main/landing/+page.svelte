@@ -18,7 +18,7 @@
             },
             {
                 "id": 222,
-                "short_members": "Alan, Alan and Alan",
+                "short_members": "The Wither and The Ender Dragon",
                 "pros": [],
                 "cons": []
             },
