@@ -3,7 +3,7 @@
 
     let missing = [];
     onMount(async () => {
-        let fetched_missing_data = await fetch();
+        let fetched_missing_data = await fetch("/api/user/seings/missing");
         missing = await fetched_missing_data.json();
     });
     let settings_pages;
