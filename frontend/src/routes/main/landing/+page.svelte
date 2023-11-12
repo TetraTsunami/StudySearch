@@ -100,6 +100,7 @@
         margin: 10px;
         padding: 5px;
         border-radius: 6px;
+        height: fit-content;
     }
 
     .group-listing-content {
