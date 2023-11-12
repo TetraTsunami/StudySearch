@@ -26,7 +26,6 @@
         color: var(--text-color);
     }
     main {
-        z-index: -1;
         max-width: 1000px;
         margin: auto;
         padding: 0 1rem;
