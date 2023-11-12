@@ -42,6 +42,9 @@
             }
         ],
     };
+    function load_more(name: string) {
+        console.log(`Loading more for ${name}.`);
+    }
 </script>
 
 <div class="centered-container">
@@ -51,14 +54,20 @@
 <div>
     <hr/>
     {#each Object.entries(groups_by_class) as [name, groups]}
-        <h2>For <i>{name}</i></h2>
+        <h2><i>{name}</i></h2>
         <div class="groups-for-a-class">
             {#each groups as obj}
                 {#if "special" in obj}
-                    <div class="group-listing group-listing-more">Load more...</div>
+                    <div class="group-listing group-listing-more" on:click={() => {
+                        load_more(name);
+                    }}>
+                        <strong>Load more...</strong>
+                    </div>
                 {:else}
                     {#each [obj] as {id, short_members, pros, cons}}
-                        <div class="group-listing group-listing-nonempty">
+                        <div class="group-listing group-listing-nonempty" on:click={() => {
+                            document.location += `/specific-gid/${id}`;
+                        }}>
                             <div class="group-listing-content">
                                 <strong class="group-members">{short_members}</strong>
                                 <div class="pro-con-listing">
@@ -116,10 +125,10 @@
     }
 
     .pro-con {
-        border-radius: 3px;
+        border-radius: 200px;
         width: max-content;
         height: max-content;
-        padding: 3px;
+        padding: 5px;
         margin: 10px;
     }
 
