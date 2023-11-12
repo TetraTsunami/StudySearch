@@ -12,6 +12,8 @@ data class Student(
     val id: ObjectId = ObjectId(),
     val profile: Profile,
     val availability: WeekAvailability,
+    // TODO Filter by this when group searching and add toggle on frontend/API
+    val lookingForGroup: Boolean,
     val classes: List<StudentClass>
 )
 

@@ -1,4 +1,4 @@
-package tech.stdy.studysearch
+package tech.stdy.studysearch.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

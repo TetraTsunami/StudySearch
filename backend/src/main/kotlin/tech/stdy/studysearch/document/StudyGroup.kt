@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class StudyGroup(
     @Id
     val id: ObjectId = ObjectId(),
+    val classId: String,
     val members: List<ObjectId>
 ) {
     fun getStudents(studentRepo: StudentRepository) = this.members.mapNotNull { studentRepo.findById(it.toHexString()).orElse(null) }
