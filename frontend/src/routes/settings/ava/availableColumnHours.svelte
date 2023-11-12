@@ -1,7 +1,4 @@
 <script>
-    import AvailableSelector from "./availableSelector.svelte";
-    export let header = "";
-    export let isDragging = false;
     export let numHours = 0;
     export let startingHour = 6;
     let selected = [];
@@ -13,7 +10,7 @@
 <div class="available-column">
     <div class="header-padding" />
     {#each selected as hour}
-        <p class="hour">{hour % 12 + ":00"}</p>
+        <div class="hour">{((hour - 1) % 12) + 1 + ":00"}</div>
     {/each}
 </div>
 
@@ -29,12 +26,16 @@
         border: 1px solid black;
     }
     .header-padding {
-        height: 1.2rem;
+        height: 2rem;
     }
-    p {
-        display: block;
-        font-size: 0.8rem;
-        height: 0.8rem;
-        margin: 0.4rem 0;
+    .hour {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 0.75rem;
+        font-size: 1.2rem;
+        height: 2rem;
+        width: 100%;
+        border-top: 2px solid black;
     }
 </style>

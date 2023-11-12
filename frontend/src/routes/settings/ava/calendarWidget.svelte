@@ -1,11 +1,16 @@
 <script>
     import AvailableColumnHours from "./availableColumnHours.svelte";
+    export let subHours = 2;
+    export let startingHour = 7;
+    export let numHours = 16;
 
-    export let grid = [14 * 2, 7];
+    export let grid = [numHours * subHours, 7];
+    let gridHeadings = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-    $: col = `repeat(${grid[1]}, 1fr)`;
-    $: row = `repeat(${grid[0]}, 1fr)`;
-    $: is_active = Array(grid[0]).fill(0).map(_ => Array(grid[1]).fill(false));
+    let col = `repeat(${grid[1]}, 1fr)`;
+    let row = `repeat(${grid[0]}, 1fr)`;
+    export let active_cells = Array(grid[0]).fill(0).map(_ => Array(grid[1]).fill(false));
+    $: active_cells = Array(grid[0]).fill(0).map(_ => Array(grid[1]).fill(false));
     $: preview = Array(grid[0]).fill(0).map(_ => Array(grid[1]).fill(false));
 
     let start = [];
@@ -14,12 +19,13 @@
     let clicked = false;
     let adding = true;
 
+
     function select(i, j) {
         if (!clicked) {
             // if the mouse just came down
             start = [i, j];
             hover_end = [i, j];
-            adding = !is_active[i][j];
+            adding = !active_cells[i][j];
         } else {
             end = [i, j];
         }
@@ -41,29 +47,34 @@
     }
 
     function save_active (end) {
-        is_active = is_active.map(
+        active_cells = active_cells.map(
             (a, i) => a.map((_, j) => (
-                adding ? withinBounds([i, j], hover_end) || is_active[i][j] :
-                    !withinBounds([i, j], hover_end) && is_active[i][j]
+                adding ? withinBounds([i, j], hover_end) || active_cells[i][j] :
+                    !withinBounds([i, j], hover_end) && active_cells[i][j]
             )));
     }
 
     function update_preview() {
-        preview = is_active.map(
+        preview = active_cells.map(
             (a, i) => a.map((_, j) => (
-                adding ? withinBounds([i, j], hover_end) || is_active[i][j] :
-                    !withinBounds([i, j], hover_end) && is_active[i][j]
+                adding ? withinBounds([i, j], hover_end) || active_cells[i][j] :
+                    !withinBounds([i, j], hover_end) && active_cells[i][j]
             )));
     }
 
 
 </script>
 <div class="calendar">
-    <AvailableColumnHours startingHour={7} numHours={14} />
-    <div class="container" style="grid-template-rows: {row}; grid-template-columns: {col};">
+    <AvailableColumnHours {startingHour} {numHours} />
+    <div class="container" style="grid-template-rows: {row + 1}; grid-template-columns: {col};">
+        {#each gridHeadings as day}
+            <div class="section-header">{day}</div>
+        {/each}
         {#each {length: grid[0]} as _, i}
-            {#each {length: grid[1]} as k, j}
+            {#each {length: grid[1]} as _, j}
                 <div class:active={preview[i][j]}
+                     class:hour={i % subHours === 0}
+                     class="cell"
                      on:mousedown={() => select(i, j)}
                      on:mouseover={() => hover(i, j)}
                 ></div>
@@ -82,17 +93,28 @@
         display: grid;
         border: 1px solid #999;
         border-radius: 2px;
-        width: 15rem;
-        grid-gap: 1px;
+        width: 30rem;
         background: #999;
     }
 
-    .container div {
+    div.cell {
+        border: 1px solid #999;
         background: #fff;
         height: 1rem;
     }
 
     div.active {
         background: orange;
+    }
+
+    div.hour {
+        border-top: black solid 2px;
+    }
+
+    .section-header {
+        background: #fff;
+        text-align: center;
+        font-size: 0.8em;
+        height: 2rem;
     }
 </style>
