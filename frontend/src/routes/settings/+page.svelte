@@ -1,19 +1,27 @@
 <script>
-    let settings_pages = [
+    import { onMount } from "svelte";
+
+    let missing = [];
+    onMount(async () => {
+        let fetched_missing_data = await fetch();
+        missing = await fetched_missing_data.json();
+    });
+    let settings_pages;
+    $: settings_pages = [
         {
             "name": "General",
             "relurl": "/gen",
-            "missing": false,
+            "missing": missing.includes("profile"),
         },
         {
             "name": "Classes",
             "relurl": "/cls",
-            "missing": false,
+            "missing": missing.includes("classes"),
         },
         {
             "name": "Availability",
             "relurl": "/ava",
-            "missing": true,
+            "missing": missing.includes("availability"),
         },
     ];
 </script>
