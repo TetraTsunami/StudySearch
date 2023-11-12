@@ -16,7 +16,7 @@
 <br/>
 
 <div class="hv-centered-container settings-form">
-    <form method="post" action="/api/user/update_settings/gen">
+    <form method="post" action="/api/user/settings/general">
         <label for="name">Enter your name:</label>
         <input type="text" id="name" name="name" placeholder="John Doe" required>
         <br/>
