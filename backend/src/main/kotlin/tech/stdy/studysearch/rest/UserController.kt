@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import tech.stdy.studysearch.document.Day
 import tech.stdy.studysearch.document.GeneralSettingsForm
 import tech.stdy.studysearch.document.MiscStudentData
 import tech.stdy.studysearch.document.Profile
@@ -79,6 +80,8 @@ class UserController(
         @AuthenticationPrincipal principal: OidcUser,
         redirectAttributes: RedirectAttributes
     ): String {
+        val lines = mutableListOf<String>()
+
         PdfReader(file.bytes).use { pdfReader ->
             val textExtractor = PdfTextExtractor(pdfReader)
 
@@ -87,7 +90,60 @@ class UserController(
                     .filterNot { it.isEmpty() }
                     .let { it.subList(0, it.size - 2) }
 
-                println(pageLines)
+                lines.addAll(pageLines)
+            }
+        }
+
+        if (lines.isEmpty())
+            throw IllegalStateException("Lines is empty, blank PDF")
+
+        var curDay: Day? = null
+        var relativeI = 0
+        var id: String = ""
+        var displayName: String = ""
+        var section: String = ""
+        var location: String = ""
+        var time: String = ""
+        val classMap = mutableMapOf<String, MutableList<TempClass>>()
+
+        for (line in lines) {
+            if (curDay == null) {
+                curDay = Day.parse(line)!!
+                relativeI = 0
+                continue
+            }
+
+            val day = Day.parse(line)
+            if (day != null) {
+                curDay = day
+                relativeI = 0
+                continue
+            }
+
+            when (relativeI) {
+                0 -> {
+                    val split = line.split(":").map { it.trim() }
+                    id = split[0]
+                    displayName = split[1]
+                }
+                1 -> {
+                    section = line
+                }
+                2 -> {
+                    location = line
+                }
+                3 -> {
+                    time = line
+                }
+            }
+
+            relativeI++
+
+            if (relativeI == 4) {
+                relativeI = 0
+
+                val tempClass = TempClass(id, displayName, location, section, time)
+                classMap.computeIfAbsent("$id $section") { mutableListOf() }.add(tempClass)
             }
         }
 
@@ -95,4 +151,30 @@ class UserController(
 
         return "redirect:${redirectStr}"
     }
+
+    // @PostMapping(path = ["/settings/availability"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    // fun updateAvailability(
+    //     @RequestParam("pdf") file: MultipartFile, @RequestParam("redirect") redirectStr: String,
+    //     @AuthenticationPrincipal principal: OidcUser,
+    //     redirectAttributes: RedirectAttributes
+    // ): String {
+    //     PdfReader(file.bytes).use { pdfReader ->
+    //         val textExtractor = PdfTextExtractor(pdfReader)
+    //
+    //         for (pageNum in 2..pdfReader.numberOfPages) {
+    //             val pageLines = textExtractor.getTextFromPage(pageNum).split('\n')
+    //                 .filterNot { it.isEmpty() }
+    //                 .let { it.subList(0, it.size - 2) }
+    //
+    //             println(pageLines)
+    //         }
+    //     }
+    //
+    //     redirectAttributes.addAttribute("message", "Successfully updated classes.")
+    //
+    //     return "redirect:${redirectStr}"
+    // }
+
 }
+
+private data class TempClass(val id: String, val displayName: String, val location: String, val section: String, val time: String)

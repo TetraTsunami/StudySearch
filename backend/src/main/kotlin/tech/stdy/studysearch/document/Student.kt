@@ -32,7 +32,25 @@ enum class Day {
     WED,
     THU,
     FRI,
-    SAT
+    SAT;
+
+    companion object {
+        fun parse(str: String): Day? {
+            if (str.length < 3)
+                return null
+
+            return when (str.lowercase()) {
+                "sunday" -> SUN
+                "monday" -> MON
+                "tuesday" -> TUE
+                "wednesday" -> WED
+                "thursday" -> THU
+                "friday" -> FRI
+                "saturday" -> SAT
+                else -> null
+            }
+        }
+    }
 }
 
 data class DaySchedule(val start: LocalDateTime, val end: LocalDateTime) {
