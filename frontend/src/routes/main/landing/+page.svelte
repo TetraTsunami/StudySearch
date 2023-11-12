@@ -47,12 +47,8 @@
     }
 </script>
 
-<div class="centered-container">
-    <h1 class="page-title">Welcome</h1>
-    <br/>
-</div>
+<div style="font-size: 0;height: 20px;line-height: 0;"></div>
 <div>
-    <hr/>
     {#each Object.entries(groups_by_class) as [name, groups]}
         <h2><i>{name}</i></h2>
         <div class="groups-for-a-class">
@@ -83,22 +79,15 @@
                 </div>
             {/each}
         </div>
-        <hr/>
+        {#if name !== Object.keys(groups_by_class).at(-1)}
+            <hr/>
+        {/if}
     {/each}
 </div>
 
 
 
 <style>
-    .centered-container {
-        display: flex;
-        justify-content: center;
-    }
-
-    .page-title {
-        font-size: 40pt;
-    }
-
     .groups-for-a-class {
         display: flex;
         justify-content: center;
@@ -151,5 +140,9 @@
     .group-listing-more {
         background-color: lightgrey;
         font-size: 20pt;
+    }
+
+    hr {
+        margin: 20px;
     }
 </style>
