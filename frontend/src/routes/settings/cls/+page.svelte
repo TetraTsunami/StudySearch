@@ -5,7 +5,7 @@
 
 <div class="hv-centered-container settings-form">
     <p>To tell us what class you're in, visit <a target="_blank" href="https://my.wisc.edu/portal/p/class-schedule.ctf2/max/render.uP">this website</a>, and click the print button. Choose "Save to PDF" (or similar) to download a PDF of your schedule. </p>
-    <form method="post" action="/api/user/update_settings/classes_from_pdf">
+    <form method="post" enctype="multipart/form-data" action="/api/user/update_settings/classes_from_pdf">
         <label for="pdf">Upload your PDF here:</label>
         <input type="file" id="pdf" name="pdf" required>
         <br/>
