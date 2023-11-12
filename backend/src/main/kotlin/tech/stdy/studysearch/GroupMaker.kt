@@ -6,39 +6,55 @@ class GroupMaker {
     fun makeGroups(student: Student, studyGroupRepo: StudyGroupRepository, studentRepo: StudentRepository): Map<StudentClass, List<StudyGroup>> {
         val potentialGroups = mutableMapOf<StudentClass, ArrayList<StudyGroup>>()
         for (section in student.classes!!) {
-            val groups = makeClassGroups(student, section, studyGroupRepo, studentRepo)
+            val groups = filterGroups(student, section, studyGroupRepo, studentRepo)
             potentialGroups[section] = groups as ArrayList<StudyGroup>
         }
         return potentialGroups
     }
 
-    private fun makeClassGroups(student: Student, section: StudentClass, studyGroupRepo: StudyGroupRepository, studentRepo: StudentRepository): List<StudyGroup> {
-        // val groups =
-
-
+    private fun filterGroups(student: Student, section: StudentClass, studyGroupRepo: StudyGroupRepository, studentRepo: StudentRepository): List<StudyGroup> {
+        val computedGroups = makeGroupsRec(listOf(student), section, 20, studyGroupRepo, studentRepo)
         val potentialGroups = mutableListOf<StudyGroup>()
-        // for (group in groups) {
-        //     if (group.students.size < 4) {
-        //         potentialGroups.add(group)
-        //     }
-        // }
+        // this is where we implement user preferences
+        if (computedGroups != null) {
+            for (group in computedGroups) {
+                if (group.members.size > 1) {
+                    potentialGroups.add(group)
+                }
+            }
+        }
         return potentialGroups
     }
 
-    private fun makeGroupRec(members: List<Student>, section: StudentClass, memberLimit: Int, studyGroupRepo: StudyGroupRepository, studentRepo: StudentRepository): StudyGroup? {
+    private fun makeGroupsRec(members: List<Student>, section: StudentClass, memberLimit: Int = 20, studyGroupRepo: StudyGroupRepository, studentRepo: StudentRepository): List<StudyGroup>? {
         val availability = computeWeeklyAvailability(members)
-        // if member list is not free, return null
+        // if members are not all free at the same time, return null
         if (availability.map { it.value.size }.sum() == 0) {
             return null
         }
-        // if member list is available, make group
-        // if (members.size == memberLimit) {
-        //     return StudyGroup(section, members)
-        // }
-        // // if group is full, return group
-        // // if group is not full, recurse
-        // val group = StudyGroup(section, members)
-        return null
+        // if member list is available and full, return group
+        if (members.size == memberLimit) {
+            return listOf(StudyGroup(classId = section.id, members = members.map { it.id }, meetingTime = availability))
+        }
+        // if group is not full, add a member
+        val potentialGroups = mutableListOf<StudyGroup>()
+        for (student in studentRepo.findAll()) {
+            if (student.classes!!.contains(section) && !members.contains(student)) {
+                val newMembers = members.toMutableList()
+                newMembers.add(student)
+                val groups = makeGroupsRec(newMembers, section, memberLimit, studyGroupRepo, studentRepo);
+                if (groups != null) {
+                    potentialGroups.addAll(groups)
+                }
+            }
+        }
+        // if there are no groups which are a superset of this group, return this group
+        // if there are groups which are a superset of this group, return those groups
+        return if (potentialGroups.size == 0) {
+            listOf(StudyGroup(classId = section.id, members = members.map { it.id }, meetingTime = availability))
+        } else {
+            potentialGroups
+        }
     }
 
     private fun computeWeeklyAvailability(members: List<Student>): WeekSchedule {
