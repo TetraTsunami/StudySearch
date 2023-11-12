@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 data class Student(
     @Id
     val id: ObjectId = ObjectId(),
-    val profile: Profile,
+    val profile: Profile?,
     val availability: WeekSchedule?,
     // TODO Filter by this when group searching and add toggle on frontend/API
     val lookingForGroup: Boolean,
@@ -18,7 +18,7 @@ data class Student(
     val other: MiscStudentData?
 )
 
-fun OidcUser.asStudent(studentRepo: StudentRepository) = this.getClaimAsString("email")
+fun OidcUser.asStudent(studentRepo: StudentRepository) = this.email
     ?.let { studentRepo.findStudentByProfileEmail(it).orElse(null) }
 
 data class Profile(val name: String, val phoneNumber: String, val email: String)

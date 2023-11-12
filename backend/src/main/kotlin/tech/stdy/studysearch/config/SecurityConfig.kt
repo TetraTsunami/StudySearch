@@ -14,5 +14,6 @@ class SecurityConfig {
     @Throws(Exception::class)
     fun configure(http: HttpSecurity): SecurityFilterChain = http.authorizeHttpRequests { authorize -> authorize.anyRequest().authenticated() }
         .oauth2Login(Customizer.withDefaults())
+        .csrf { it.disable() }
         .build()
 }
