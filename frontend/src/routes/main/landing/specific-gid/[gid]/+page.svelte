@@ -41,6 +41,18 @@
             </div>
         </div>
     {/each}
+    <br/>
+</div>
+
+<div class="centered-container">
+    <div>
+        <button class="group-action-button join-button" on:click={() => {
+            document.location += "/action-join";
+        }}>JOIN</button>
+        <button class="group-action-button reject-button" on:click={() => {
+            document.location += "/action-reject";
+        }}>REJECT</button>
+    </div>
 </div>
 
 <div class="at-bottom">
@@ -67,11 +79,26 @@
     }
 
     .profile-picture-container {
-        
+        border-radius: 100%;
+        overflow: clip;
     }
 
     .profile-name {
         font-size: 20pt;
+    }
+
+    .group-action-button {
+        margin: 20px;
+        padding: 5px;
+        font-size: 40pt;
+    }
+
+    .join-button {
+        background-color: lime;
+    }
+
+    .reject-button {
+        background-color: red;
     }
 
     .at-bottom {
