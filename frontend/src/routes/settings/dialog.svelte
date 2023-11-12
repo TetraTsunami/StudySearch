@@ -19,8 +19,8 @@
     .dialog {
         position: absolute;
         top: 6rem;
-        width: 7rem;
-        height: 3rem;
+        padding: 1rem;
+        width: fit-content;
         background-color: var(--accent-color);
         left: 50%;
         right: 50%;
