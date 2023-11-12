@@ -2,19 +2,19 @@
     import { page } from '$app/stores';
     let group_id = $page.params.gid;
     let all_info = {
-        "short_name": "Joe, Bob, and Your Mom",
+        "short_name": "Joe, Bob, and Dave",
         "other_members_info": [
             {
-                "name": "Joe Biden",
+                "name": "Joe",
                 "pfpurl": "https://pbs.twimg.com/profile_images/1308769664240160770/AfgzWVE7_200x200.jpg"
             },
             {
-                "name": "Bob the Builder",
-                "pfpurl": "https://cdn.dribbble.com/users/14550336/screenshots/20330496/media/631486de0e0655a1ee3a30335acc18d2.jpg?resize=300x300&vertical=center"
+                "name": "Bob",
+                "pfpurl": "https://img.freepik.com/free-photo/asian-man-isolated-expressing-emotions_1303-26709.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699747200&semt=ais"
             },
             {
-                "name": "Your Mom",
-                "pfpurl": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9a/Trollface_non-free.png/220px-Trollface_non-free.png"
+                "name": "Dave",
+                "pfpurl": "https://media.discordapp.net/attachments/1172945528615612447/1173346567370047538/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvMzY2LW1ja2luc2V5LTIxYTc3MzYtZm9uLWwtam9iNjU1LnBuZw.png?ex=65639f25&is=65512a25&hm=7324597f9a5f32337af1fb427c00ceb4987d5183c55a140c98d8d25641ddeb15&=&width=571&height=571"
             }
         ]
     };

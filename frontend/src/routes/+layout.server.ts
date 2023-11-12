@@ -1,12 +1,14 @@
-import { redirect } from '@sveltejs/kit';
+import { user } from "../hooks.server";
+
+export const prerender = true;
 
 export const load = async (event) => {
-    const session = await event.locals.getSession();
-
-    if (session && event.url.pathname == '/') {
-        throw redirect(307, '/main/landing');
+    if (user == undefined) {
+        (window as Window).location = window.location.host + '/main/landing';
+        return;
     }
-
+    
+    const session = await event.locals.getSession();
     return {
         session
     };

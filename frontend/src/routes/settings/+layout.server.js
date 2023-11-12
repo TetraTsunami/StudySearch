@@ -1,12 +1,12 @@
-import { redirect } from '@sveltejs/kit';
+import { login, user } from '../../hooks.server.js';
 
 export const load = async (event) => {
-    const session = await event.locals.getSession();
-
-    if (!session) {
-        throw redirect(307, 'auth/signin');
+    if (user == undefined) {
+        login();
+        return;
     }
-
+    
+    const session = await event.locals.getSession();
     return {
         session
     };

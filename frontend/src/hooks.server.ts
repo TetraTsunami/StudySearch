@@ -1,26 +1,36 @@
-// <3 https://blog.aakashgoplani.in/sveltekit-authentication-using-sveltekitauth-and-oauth-providers-a-comprehensive-guide
-import { SvelteKitAuth, type SvelteKitAuthConfig } from "@auth/sveltekit";
-import Auth0Provider from "@auth/core/providers/auth0";
-import type { Provider } from "@auth/core/providers";
-import type { Handle } from "@sveltejs/kit";
-import { AUTH0_DOMAIN, AUTH0_CLIENTID, AUTH0_SECRET, AUTHJS_SECRET } from "$env/static/private"
+import { createAuth0Client, User } from '@auth0/auth0-spa-js';
+import { AUTH0_DOMAIN, AUTH0_CLIENTID } from "$env/static/private"
+import { onMount } from 'svelte';
+import { page } from '$app/stores';
 
-const config: SvelteKitAuthConfig = {
-    providers: [
-        Auth0Provider({
-            // id: "auth0",
-            // name: "Auth0",
-            clientId: AUTH0_CLIENTID,
-            clientSecret: AUTH0_SECRET,
-            issuer: AUTH0_DOMAIN,
-            // wellKnown: AUTH0_DOMAIN + ".well-known/openid-configuration"
-        }) as Provider
-    ],
-    secret: AUTHJS_SECRET,
-    // debug: true,
-    // session: {
-    //     maxAge: 1800 // 30 mins
-    // }
-};
+export const auth0 = await createAuth0Client({
+    domain: AUTH0_DOMAIN,
+    clientId: AUTH0_CLIENTID,
+    cacheLocation: 'localstorage'
+});
 
-export const handle = SvelteKitAuth(config) satisfies Handle;
+export async function login() {
+    await auth0.loginWithRedirect({
+        authorizationParams: {
+            redirect_uri: $page.url.pathname
+        }
+    })
+}
+
+export async function logout() {
+    await auth0.logout()
+}
+
+export let user: User | undefined;
+let url: string;
+
+onMount(async () => {
+    url = window.location.href;
+    await auth0.handleRedirectCallback()
+        .then(async () => {
+            user = await auth0.getUser();
+        })
+        .catch(() => {
+            (window as Window).location = window.location.host;
+        });
+})

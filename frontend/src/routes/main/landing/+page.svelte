@@ -29,7 +29,7 @@
         "COMP SCI 300": [
             {
                 "id": 111,
-                "short_members": "Joe, Bob, and Your Mom",
+                "short_members": "Joe, Bob, and Dave",
                 "pros": ["Same Section"],
                 "cons": []
             },
