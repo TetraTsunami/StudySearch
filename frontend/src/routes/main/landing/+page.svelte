@@ -1,4 +1,6 @@
 <script lang="ts">
+    import SmallGroup from "./smallGroup.svelte";
+
     type Group = {
         "id": number,
         "short_members": string,
@@ -61,16 +63,7 @@
                     </div>
                 {:else}
                     {#each [obj] as {id, short_members, pros, cons}}
-                        <div class="group-listing group-listing-nonempty" on:click={() => {
-                            document.location += `/specific-gid/${id}`;
-                        }}>
-                            <div class="group-listing-content">
-                                <strong class="group-members">{short_members}</strong>
-                                <div class="pro-con-listing">
-                                    {#each pros as pro}<div class="pro-con pro">{pro}</div>{/each}{#each cons as con}<div class="pro-con con">{con}</div>{/each}
-                                </div>
-                            </div>
-                        </div>
+                        <SmallGroup {id} {short_members} {pros} {cons}/>
                     {/each}
                 {/if}
             {:else}
@@ -98,39 +91,6 @@
         margin: 10px;
         padding: 5px;
         border-radius: 6px;
-        height: fit-content;
-    }
-
-    .group-listing-content {
-        display: grid;
-    }
-
-    .group-members {
-        font-size: 20pt;
-    }
-
-    .pro-con-listing {
-        display: inline-block;
-    }
-
-    .pro-con {
-        border-radius: 200px;
-        width: max-content;
-        height: max-content;
-        padding: 5px;
-        margin: 10px;
-    }
-
-    .pro {
-        background-color: lime;
-    }
-
-    .con {
-        background-color: red;
-    }
-
-    .group-listing-nonempty {
-        background-color: lightskyblue;
     }
 
     .group-listing-empty {
