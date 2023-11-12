@@ -9,7 +9,8 @@ data class StudyGroup(
     @Id
     val id: ObjectId = ObjectId(),
     val classId: String,
-    val members: List<ObjectId>
+    val members: List<ObjectId>,
+    val meetingTime: WeekSchedule,
 ) {
     fun getStudents(studentRepo: StudentRepository) = this.members.mapNotNull { studentRepo.findById(it.toHexString()).orElse(null) }
 
