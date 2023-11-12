@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import tech.stdy.studysearch.document.Day
 import tech.stdy.studysearch.document.GeneralSettingsForm
 import tech.stdy.studysearch.document.MiscStudentData
 import tech.stdy.studysearch.document.Profile
@@ -94,58 +93,58 @@ class UserController(
             }
         }
 
-        if (lines.isEmpty())
-            throw IllegalStateException("Lines is empty, blank PDF")
-
-        var curDay: Day? = null
-        var relativeI = 0
-        var id: String = ""
-        var displayName: String = ""
-        var section: String = ""
-        var location: String = ""
-        var time: String = ""
-        val classMap = mutableMapOf<String, MutableList<TempClass>>()
-
-        for (line in lines) {
-            if (curDay == null) {
-                curDay = Day.parse(line)!!
-                relativeI = 0
-                continue
-            }
-
-            val day = Day.parse(line)
-            if (day != null) {
-                curDay = day
-                relativeI = 0
-                continue
-            }
-
-            when (relativeI) {
-                0 -> {
-                    val split = line.split(":").map { it.trim() }
-                    id = split[0]
-                    displayName = split[1]
-                }
-                1 -> {
-                    section = line
-                }
-                2 -> {
-                    location = line
-                }
-                3 -> {
-                    time = line
-                }
-            }
-
-            relativeI++
-
-            if (relativeI == 4) {
-                relativeI = 0
-
-                val tempClass = TempClass(id, displayName, location, section, time)
-                classMap.computeIfAbsent("$id $section") { mutableListOf() }.add(tempClass)
-            }
-        }
+        // if (lines.isEmpty())
+        //     throw IllegalStateException("Lines is empty, blank PDF")
+        //
+        // var curDay: Day? = null
+        // var relativeI = 0
+        // var id: String = ""
+        // var displayName: String = ""
+        // var section: String = ""
+        // var location: String = ""
+        // var time: String = ""
+        // val classMap = mutableMapOf<String, MutableList<TempClass>>()
+        //
+        // for (line in lines) {
+        //     if (curDay == null) {
+        //         curDay = Day.parse(line)!!
+        //         relativeI = 0
+        //         continue
+        //     }
+        //
+        //     val day = Day.parse(line)
+        //     if (day != null) {
+        //         curDay = day
+        //         relativeI = 0
+        //         continue
+        //     }
+        //
+        //     when (relativeI) {
+        //         0 -> {
+        //             val split = line.split(":").map { it.trim() }
+        //             id = split[0]
+        //             displayName = split[1]
+        //         }
+        //         1 -> {
+        //             section = line
+        //         }
+        //         2 -> {
+        //             location = line
+        //         }
+        //         3 -> {
+        //             time = line
+        //         }
+        //     }
+        //
+        //     relativeI++
+        //
+        //     if (relativeI == 4) {
+        //         relativeI = 0
+        //
+        //         val tempClass = TempClass(id, displayName, location, section, time)
+        //         classMap.computeIfAbsent("$id $section") { mutableListOf() }.add(tempClass)
+        //     }
+        // }
 
         redirectAttributes.addAttribute("message", "Successfully updated classes.")
 
@@ -177,4 +176,4 @@ class UserController(
 
 }
 
-private data class TempClass(val id: String, val displayName: String, val location: String, val section: String, val time: String)
+// private data class TempClass(val id: String, val displayName: String, val location: String, val section: String, val time: String)
