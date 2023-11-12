@@ -14,7 +14,6 @@ import tech.stdy.studysearch.document.asStudent
 
 @RestController
 @RequestMapping("/api/study-groups")
-@CrossOrigin
 class StudyGroupController(
     @Autowired private val studyGroupRepo: StudyGroupRepository,
     @Autowired private val studentRepo: StudentRepository
